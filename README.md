@@ -17,6 +17,6 @@ sudo mv terraform /usr/local/bin
 a rapid terraform check show that terraform is installed
 ```
 $ terraform version
-**Terraform v0.13.0**
 ```
+**Terraform v0.13.0**
 
