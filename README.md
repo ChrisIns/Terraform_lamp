@@ -22,6 +22,8 @@ $ terraform version
 
 # Creating the provider.tf file
 
+We create the provider file to control the version of the docker provider
+
 ```
 terraform {
         required_providers {
@@ -32,4 +34,14 @@ terraform {
         }
 }
 ```
+# Creating the Dockerfile for the Apache image
 
+```
+FROM php:7.0-apache
+
+RUN docker-php-ext-install -j$(nproc) pdo
+RUN docker-php-ext-install -j$(nproc) pdo_mysql
+
+```
+
+# Creating the Apache docker image with Terraform
