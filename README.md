@@ -20,3 +20,5 @@ $ terraform version
 ```
 **Terraform v0.13.0**
 
+# Installing Docker
+
