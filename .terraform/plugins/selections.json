@@ -1,0 +1,6 @@
+{
+  "registry.terraform.io/kreuzwerker/docker": {
+    "hash": "h1:OcTn2QyCQNjDiJYy1vqQFmz2dxJdOF/2/HBXBvGxU2E=",
+    "version": "2.16.0"
+  }
+}
