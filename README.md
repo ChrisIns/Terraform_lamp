@@ -219,8 +219,8 @@ Now that we have our main.tf file created, we will do the 3 terraform commands t
 
 We can see in the output that the resources are indeed created:
 
-```
 **terraform apply -auto-approve**
+```
 docker_volume.mariadb_volume: Creating...
 docker_network.lamp_network: Creating...
 docker_image.mariadb-image: Creating...
