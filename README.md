@@ -235,3 +235,4 @@ docker_container.mariadb: Creation complete after 0s [id=0aa893ca2ffd0ecaae11242
 docker_container.apache: Creation complete after 0s [id=9eb19fc0b3b950dafb55363b5c14d4646427e467adfb53c25dfd36fb4ff44906]
 
 Apply complete! Resources: 6 added, 0 changed, 0 destroyed. 
+```
