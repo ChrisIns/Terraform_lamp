@@ -69,3 +69,18 @@ docker images | grep apache
 apache       lamp         7286ec2e1d75   17 minutes ago   368MB
 ```
 # Creating the docker network 
+
+We will need a docker network from which will be connected the Apache and the MariaDB container
+
+```
+resource "docker_network" "lamp_network" {
+        name = "lamp_network"
+}
+```
+
+We can check that the network is created with the **docker network ls** command
+
+```
+docker network ls | grep lamp
+0f462ff504e0   lamp_network   bridge    local
+```
