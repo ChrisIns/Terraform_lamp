@@ -236,3 +236,19 @@ docker_container.apache: Creation complete after 0s [id=9eb19fc0b3b950dafb55363b
 
 Apply complete! Resources: 6 added, 0 changed, 0 destroyed. 
 ```
+# Testing that the website is up and running
+
+I didn't do some groundbreaking website for this project, since the goal was just to deploy a LAMP stack to host our web files.
+I put emphasis on the IaC side of things, and not on the web dev side of things so here is a rapid test to check if the website is running:
+
+```
+curl http://localhost
+<html>
+ <head>
+  <title>Test PHP</title>
+ </head>
+ <body>
+ <p>Hello World</p> </body>
+</html>
+```
+
