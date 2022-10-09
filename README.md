@@ -84,3 +84,37 @@ We can check that the network is created with the **docker network ls** command
 docker network ls | grep lamp
 0f462ff504e0   lamp_network   bridge    local
 ```
+# Creating the Apache container
+
+Creating the docker container with Terraform requires more parameters, we need to specify:
+
+- The image ressource id
+- The network that the container will use
+- The port inside the container and the port exposed on the host (similar to docker run -p 80:80...), here we use the 0.0.0.0 IP address for localhost.
+- The volume to have a mount point (we'll see later that we can also use a Docker volume with the mariadb container)
+- Depends_on will tell Terraform to build the network resource before the container resource.
+
+```
+resource "docker_container" "apache" {
+        name = "webserver"
+        hostname = "apache"
+        image = docker_image.apache-image.latest
+        networks = [docker_network.lamp_network.id]
+        ports {
+                internal = 80
+                external = 80
+                ip = "0.0.0.0"
+        }
+        labels {
+                label = "project"
+                value = "lamp"
+        }
+        volumes {
+                container_path = "/var/www/html"
+                host_path = "/home/kali/lamp/website_files"
+        }
+        depends_on = [
+                docker_network.lamp_network
+        ]
+}
+```
