@@ -159,3 +159,53 @@ resource "docker_image" "mariadb-image" {
         }
 }
 ```
+
+A rapid check to see if the image is indeed created:
+
+```
+docker images | grep mariadb
+mariadb      lamp         f29f113b8c8f   34 minutes ago   360MB
+```
+
+# Creating the MariaDB container
+
+Same thing as with the Apache container, but here we will mount the container on the Docker volume.
+We can also specify environment variable that will be used to connect to the SQL server database.
+We make terraform launch the network and volume resource before the container with the **depends_on** parameter.
+
+```
+resource "docker_container" "mariadb" {
+        name = "db"
+        hostname = "db"
+        image = docker_image.mariadb-image.latest
+        networks = [docker_network.lamp_network.id]
+        ports {
+                internal = 3306
+                external = 3306
+                ip = "0.0.0.0"
+        }
+        labels {
+                label = "project"
+                value = "lamp"
+        }
+        env = [
+                "MYSQL_ROOT_PASSWORD=1234",
+                "MYSQL_DATABASE=simple-website"
+        ]
+        volumes {
+                volume_name = docker_volume.mariadb_volume.id
+                container_path = "/var/lib/mysql"
+        }
+        depends_on = [
+                docker_network.lamp_network,
+                docker_volume.mariadb_volume
+        ]
+}
+```
+
+We check that the docker container is indeed created with **docker ps** command.
+
+```
+docker ps | grep db
+f336385e1ecf   f29f113b8c8f   "docker-entrypoint.s…"   21 minutes ago   Up 21 minutes   0.0.0.0:3306->3306/tcp   db
+```
