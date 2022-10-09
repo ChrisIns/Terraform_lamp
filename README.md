@@ -122,7 +122,10 @@ resource "docker_container" "apache" {
 We can then check if the container is UP with the **docker ps** command:
 
 ```
-
+docker ps                    
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                    NAMES
+9ee3d31fb065   7286ec2e1d75   "docker-php-entrypoi…"   12 minutes ago   Up 12 minutes   0.0.0.0:80->80/tcp       webserver
+```
 
 # Creating the Docker volume for MariaDB container
 
@@ -133,10 +136,7 @@ resource "docker_volume" "mariadb_volume" {
         name = "mariadb_volume"
 }
 ```
-docker ps                    
-CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                    NAMES
-9ee3d31fb065   7286ec2e1d75   "docker-php-entrypoi…"   12 minutes ago   Up 12 minutes   0.0.0.0:80->80/tcp       webserver
-```
+
 
 
 
