@@ -144,4 +144,18 @@ DRIVER    VOLUME NAME
 local     mariadb_volume
 ```
 
+# Creating the docker image for the mariaDB container
 
+Same thing as the Apache container:
+
+```
+resource "docker_image" "mariadb-image" {
+        name = "mariadb:lamp"
+        build {
+                path = "~/lamp/images/db"
+                label = {
+                        project : "lamp"
+                }
+        }
+}
+```
