@@ -172,12 +172,7 @@ resource "docker_container" "mariadb" {
 }
 ```
 
-We check that the docker container is indeed created with **docker ps** command.
 
-```
-docker ps | grep db
-f336385e1ecf   f29f113b8c8f   "docker-entrypoint.s…"   21 minutes ago   Up 21 minutes   0.0.0.0:3306->3306/tcp   db
-```
 # Deploying the resources with the terraform workflow
 
 Now that we have our main.tf file created, we will do the 3 terraform commands to deploy our resources:
@@ -255,7 +250,12 @@ Check to see if the mariadb image is indeed created:
 docker images | grep mariadb
 mariadb      lamp         f29f113b8c8f   34 minutes ago   360MB
 ```
+We check that the mariadb container is indeed created:
 
+```
+docker ps | grep db
+f336385e1ecf   f29f113b8c8f   "docker-entrypoint.s…"   21 minutes ago   Up 21 minutes   0.0.0.0:3306->3306/tcp   db
+```
 # Testing that the website is up and running
 
 I didn't do some groundbreaking website for this project, since the goal was just to deploy a LAMP stack to host our web files.
