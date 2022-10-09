@@ -1,7 +1,7 @@
-resource "docker_image" "php-image" {
-        name = "php:lamp"
+resource "docker_image" "apache-image" {
+        name = "apache:lamp"
         build {
-                path = "~/lamp/images/php/"
+                path = "~/lamp/images/apache/"
                 label = {
                         project : "lamp"
                 }
@@ -12,10 +12,10 @@ resource "docker_network" "lamp_network" {
 	name = "lamp_network"
 }
 
-resource "docker_container" "php-httpd" {
+resource "docker_container" "apache" {
 	name = "webserver"
-	hostname = "php-httpd"
-	image = docker_image.php-image.latest
+	hostname = "apache"
+	image = docker_image.apache-image.latest
 	networks = [docker_network.lamp_network.id]
 	ports {
 		internal = 80
