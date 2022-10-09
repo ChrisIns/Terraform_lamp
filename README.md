@@ -118,3 +118,19 @@ resource "docker_container" "apache" {
         ]
 }
 ```
+
+# Creating the Docker volume for MariaDB container
+
+We will need a volume for the MariaDB container.The creation of a docker volume is pretty easy with Terraform:
+
+```
+resource "docker_volume" "mariadb_volume" {
+        name = "mariadb_volume"
+}
+```
+
+
+
+
+
+
