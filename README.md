@@ -252,3 +252,4 @@ curl http://localhost
 </html>
 ```
 
+Indeed the server is up and running ! 
