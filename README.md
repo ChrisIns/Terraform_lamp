@@ -45,3 +45,19 @@ RUN docker-php-ext-install -j$(nproc) pdo_mysql
 ```
 
 # Creating the Apache docker image with Terraform
+
+To build a docker image with Terraform and docker provider, we just have to specify the image path to the required Dockerfile:
+
+``` 
+
+resource "docker_image" "apache-image" {
+        name = "apache:lamp"
+        build {
+                path = "~/lamp/images/apache/"
+                label = {
+                        project : "lamp"
+                }
+        }
+}
+
+```
