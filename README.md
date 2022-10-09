@@ -61,3 +61,11 @@ resource "docker_image" "apache-image" {
 }
 
 ```
+
+We can check that the image is indeed created with **docker images** command
+
+```
+docker images | grep apache
+apache       lamp         7286ec2e1d75   17 minutes ago   368MB
+```
+# Creating the docker network 
