@@ -136,7 +136,12 @@ resource "docker_volume" "mariadb_volume" {
         name = "mariadb_volume"
 }
 ```
+We can check that the volume is indeed created with the **docker volume ls** command
 
-
+``` 
+docker volume ls
+DRIVER    VOLUME NAME
+local     mariadb_volume
+```
 
 
