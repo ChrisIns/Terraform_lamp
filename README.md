@@ -209,3 +209,29 @@ We check that the docker container is indeed created with **docker ps** command.
 docker ps | grep db
 f336385e1ecf   f29f113b8c8f   "docker-entrypoint.s…"   21 minutes ago   Up 21 minutes   0.0.0.0:3306->3306/tcp   db
 ```
+# Deploying the resources with the terraform workflow
+
+Now that we have our main.tf file created, we will do the 3 terraform commands to deploy our resources:
+
+- **terraform init** to download the required providers plugins
+- **terraform plan** to generate the execution plan
+- **terraform apply -auto-approve** to deploy our resources
+
+We can see in the output that the resources are indeed created:
+
+```
+**terraform apply -auto-approve**
+docker_volume.mariadb_volume: Creating...
+docker_network.lamp_network: Creating...
+docker_image.mariadb-image: Creating...
+docker_image.apache-image: Creating...
+docker_volume.mariadb_volume: Creation complete after 0s [id=mariadb_volume]
+docker_image.mariadb-image: Creation complete after 0s [id=sha256:2dc13ca6fd9198bcf3abde5c84a2f37b4b03d46a2de1cded77362b3fbefe950fmariadb:lamp]
+docker_image.apache-image: Creation complete after 0s [id=sha256:47b086c0c6fb92a2eccc039af6ed753f5a1322cc68dd5db99079123bd7a3f0e1apache:lamp]
+docker_network.lamp_network: Creation complete after 2s [id=85ff7919fe9be6fe035ee8ba98002496c4bd7683559275393694a81e549f01a1]
+docker_container.apache: Creating...
+docker_container.mariadb: Creating...
+docker_container.mariadb: Creation complete after 0s [id=0aa893ca2ffd0ecaae11242a45b62f8a92008a058c4ab0e26b5540bef26781f2]
+docker_container.apache: Creation complete after 0s [id=9eb19fc0b3b950dafb55363b5c14d4646427e467adfb53c25dfd36fb4ff44906]
+
+Apply complete! Resources: 6 added, 0 changed, 0 destroyed. 
