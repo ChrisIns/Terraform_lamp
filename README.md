@@ -327,6 +327,8 @@ variable "mysql_database" {
 }
 ```
 
+# Adding a terraform.tfvars file
+
 We will declare the value in the terraform.tfvars file:
 
 ```
@@ -342,6 +344,7 @@ volume_name="mariadb_volume"
 mysql_pass="MYSQL_ROOT_PASSWORD=1234"
 mysql_database="MYSQL_DATABASE=simple-website"
 ```
+# Modifying the main.tf file
 
 And then we change the hardcoded values in our main.tf file by **var.<variable_name>**, for example:
 
