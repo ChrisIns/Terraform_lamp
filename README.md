@@ -62,12 +62,7 @@ resource "docker_image" "apache-image" {
 
 ```
 
-We can check that the image is indeed created with **docker images** command
 
-```
-docker images | grep apache
-apache       lamp         7286ec2e1d75   17 minutes ago   368MB
-```
 # Creating the docker network 
 
 We will need a docker network from which will be connected the Apache and the MariaDB container
@@ -78,12 +73,6 @@ resource "docker_network" "lamp_network" {
 }
 ```
 
-We can check that the network is created with the **docker network ls** command
-
-```
-docker network ls | grep lamp
-0f462ff504e0   lamp_network   bridge    local
-```
 # Creating the Apache container
 
 Creating the docker container with Terraform requires more parameters, we need to specify:
@@ -119,14 +108,6 @@ resource "docker_container" "apache" {
 }
 ```
 
-We can then check if the container is UP with the **docker ps** command:
-
-```
-docker ps                    
-CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                    NAMES
-9ee3d31fb065   7286ec2e1d75   "docker-php-entrypoi…"   12 minutes ago   Up 12 minutes   0.0.0.0:80->80/tcp       webserver
-```
-
 # Creating the Docker volume for MariaDB container
 
 We will need a volume for the MariaDB container.The creation of a docker volume is pretty easy with Terraform:
@@ -135,13 +116,6 @@ We will need a volume for the MariaDB container.The creation of a docker volume 
 resource "docker_volume" "mariadb_volume" {
         name = "mariadb_volume"
 }
-```
-We can check that the volume is indeed created with the **docker volume ls** command
-
-``` 
-docker volume ls
-DRIVER    VOLUME NAME
-local     mariadb_volume
 ```
 
 # Creating the docker image for the mariaDB container
@@ -160,12 +134,7 @@ resource "docker_image" "mariadb-image" {
 }
 ```
 
-A rapid check to see if the image is indeed created:
 
-```
-docker images | grep mariadb
-mariadb      lamp         f29f113b8c8f   34 minutes ago   360MB
-```
 
 # Creating the MariaDB container
 
@@ -203,12 +172,7 @@ resource "docker_container" "mariadb" {
 }
 ```
 
-We check that the docker container is indeed created with **docker ps** command.
 
-```
-docker ps | grep db
-f336385e1ecf   f29f113b8c8f   "docker-entrypoint.s…"   21 minutes ago   Up 21 minutes   0.0.0.0:3306->3306/tcp   db
-```
 # Deploying the resources with the terraform workflow
 
 Now that we have our main.tf file created, we will do the 3 terraform commands to deploy our resources:
@@ -235,6 +199,62 @@ docker_container.mariadb: Creation complete after 0s [id=0aa893ca2ffd0ecaae11242
 docker_container.apache: Creation complete after 0s [id=9eb19fc0b3b950dafb55363b5c14d4646427e467adfb53c25dfd36fb4ff44906]
 
 Apply complete! Resources: 6 added, 0 changed, 0 destroyed. 
+```
+
+We can list the resources created with the **terraform state list** command.
+
+```
+terraform state list         
+docker_container.apache
+docker_container.mariadb
+docker_image.apache-image
+docker_image.mariadb-image
+docker_network.lamp_network
+docker_volume.mariadb_volume
+```
+
+# Verification of the docker resource
+
+We can check that the image is indeed created with **docker images** command
+
+```
+docker images | grep apache
+apache       lamp         7286ec2e1d75   17 minutes ago   368MB
+```
+
+We can check that the network is created with the **docker network ls** command
+
+```
+docker network ls | grep lamp
+0f462ff504e0   lamp_network   bridge    local
+```
+
+We can then check if the container is UP with the **docker ps** command:
+
+```
+docker ps                    
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                    NAMES
+9ee3d31fb065   7286ec2e1d75   "docker-php-entrypoi…"   12 minutes ago   Up 12 minutes   0.0.0.0:80->80/tcp       webserver
+```
+
+We can check that the volume is indeed created with the **docker volume ls** command
+
+``` 
+docker volume ls
+DRIVER    VOLUME NAME
+local     mariadb_volume
+```
+Check to see if the mariadb image is indeed created:
+
+```
+docker images | grep mariadb
+mariadb      lamp         f29f113b8c8f   34 minutes ago   360MB
+```
+We check that the mariadb container is indeed created:
+
+```
+docker ps | grep db
+f336385e1ecf   f29f113b8c8f   "docker-entrypoint.s…"   21 minutes ago   Up 21 minutes   0.0.0.0:3306->3306/tcp   db
 ```
 # Testing that the website is up and running
 
