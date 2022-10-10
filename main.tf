@@ -1,7 +1,7 @@
 resource "docker_image" "apache-image" {
-        name = "apache:lamp"
+        name = var.images[0]
         build {
-                path = "~/lamp/images/apache/"
+                path = var.path[0]
                 label = {
                         project : "lamp"
                 }
@@ -9,7 +9,7 @@ resource "docker_image" "apache-image" {
 }
 
 resource "docker_network" "lamp_network" {
-	name = "lamp_network"
+	name = var.network_name
 }
 
 resource "docker_container" "apache" {
@@ -18,17 +18,17 @@ resource "docker_container" "apache" {
 	image = docker_image.apache-image.latest
 	networks = [docker_network.lamp_network.id]
 	ports {
-		internal = 80
-		external = 80
-		ip = "0.0.0.0"
+		internal = var.ports_internal[0]
+		external = var.ports_external[0]
+		ip = var.ip
 	}
 	labels {
 		label = "project"
 		value = "lamp"
 	}
 	volumes {
-		container_path = "/var/www/html"
-		host_path = "/home/kali/lamp/website_files"
+		container_path = var.container_path[0]
+		host_path = var.host_path
 	}
 	depends_on = [
 		docker_network.lamp_network
@@ -36,9 +36,9 @@ resource "docker_container" "apache" {
 }
 
 resource "docker_image" "mariadb-image" {
-	name = "mariadb:lamp"
+	name = var.images[1]
 	build {
-		path = "~/lamp/images/db"
+		path = var.path[1]
 		label = {
 			project : "lamp"
 		}
@@ -46,7 +46,7 @@ resource "docker_image" "mariadb-image" {
 }
 
 resource "docker_volume" "mariadb_volume" {
-	name = "mariadb_volume"
+	name = var.volume_name
 }
 
 resource "docker_container" "mariadb" {
@@ -55,21 +55,21 @@ resource "docker_container" "mariadb" {
 	image = docker_image.mariadb-image.latest
 	networks = [docker_network.lamp_network.id]
 	ports {
-		internal = 3306
-		external = 3306
-		ip = "0.0.0.0"
+		internal = var.ports_internal[1]
+		external = var.ports_external[1]
+		ip = var.ip
 	}
 	labels {
 		label = "project"
 		value = "lamp"
 	}
 	env = [
-		"MYSQL_ROOT_PASSWORD=1234",
-                "MYSQL_DATABASE=simple-website"
+		var.mysql_pass,
+                var.mysql_database
 	]
 	volumes {
 		volume_name = docker_volume.mariadb_volume.id
-		container_path = "/var/lib/mysql"
+		container_path = var.container_path[1]
 	}
 	depends_on = [
 		docker_network.lamp_network,
