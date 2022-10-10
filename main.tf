@@ -3,7 +3,7 @@ resource "docker_image" "apache-image" {
         build {
                 path = var.path[0]
                 label = {
-                        project : "lamp"
+                        project : var.project_name
                 }
         }
 }
@@ -24,7 +24,7 @@ resource "docker_container" "apache" {
 	}
 	labels {
 		label = "project"
-		value = "lamp"
+		value = var.project_name
 	}
 	volumes {
 		container_path = var.container_path[0]
@@ -40,7 +40,7 @@ resource "docker_image" "mariadb-image" {
 	build {
 		path = var.path[1]
 		label = {
-			project : "lamp"
+			project : var.project_name
 		}
 	}
 }
@@ -61,7 +61,7 @@ resource "docker_container" "mariadb" {
 	}
 	labels {
 		label = "project"
-		value = "lamp"
+		value = var.project_name
 	}
 	env = [
 		var.mysql_pass,

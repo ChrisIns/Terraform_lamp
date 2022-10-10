@@ -42,3 +42,7 @@ variable "mysql_pass" {
 variable "mysql_database" {
 	type = string
 }
+
+variable "project_name" {
+	type = string
+}
