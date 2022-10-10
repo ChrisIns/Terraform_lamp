@@ -344,6 +344,9 @@ volume_name="mariadb_volume"
 mysql_pass="MYSQL_ROOT_PASSWORD=1234"
 mysql_database="MYSQL_DATABASE=simple-website"
 ```
+
+Yes, putting the password in plain text is bad, but here its a localhost server so its not important, but in real world prod environment, we should store it in an encrypted backend or use Vault to manage the secrets.
+
 # Modifying the main.tf file
 
 And then we change the hardcoded values in our main.tf file by **var.<variable_name>**, for example:
