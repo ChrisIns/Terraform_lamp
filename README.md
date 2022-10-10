@@ -273,3 +273,83 @@ curl http://localhost
 ```
 
 Indeed the server is up and running ! 
+
+# Improving our code
+
+# Adding a variables.tf file
+
+We will add a variables.tf file to declare our variables:
+
+```
+variable "images" {
+        type = list(string)
+}
+
+variable "path" {
+        type = list(string)
+}
+
+variable "container_path" {
+        type = list(string)
+}
+
+variable "network_name" {
+        type = string
+}
+
+variable "ports_internal" {
+        type = list(number)
+}
+
+variable "ports_external" {
+        type = list(number)
+}
+
+variable "ip" {
+        type = string
+        description = "IP localhost"
+}
+
+variable "host_path" {
+        type = string
+}
+
+variable "volume_name" {
+        type = string
+}
+
+variable "mysql_pass" {
+        type = string
+}
+
+variable "mysql_database" {
+        type = string
+}
+```
+
+We will declare the value in the terraform.tfvars file:
+
+```
+images=["apache:lamp","mariadb:lamp"]
+path=["~/lamp/images/apache","~/lamp/images/db"]
+container_path=["/var/www/html","/var/lib/mysql"]
+network_name="lamp_network"
+ports_internal=[80,3306]
+ports_external=[80,3306]
+ip="0.0.0.0"
+host_path="/home/kali/lamp/website_files"
+volume_name="mariadb_volume"
+mysql_pass="MYSQL_ROOT_PASSWORD=1234"
+mysql_database="MYSQL_DATABASE=simple-website"
+```
+
+And then we change the hardcoded values in our main.tf file by **var.<variable_name>**, for example:
+
+```
+ports {
+                internal = var.ports_internal[0]
+                external = var.ports_external[0]
+                ip = var.ip
+        }
+```
+
