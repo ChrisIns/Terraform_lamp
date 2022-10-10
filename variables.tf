@@ -46,3 +46,15 @@ variable "mysql_database" {
 variable "project_name" {
 	type = string
 }
+
+variable "label" {
+	type = string
+}
+
+variable "container_name" {
+	type = list(string)
+}
+
+variable "container_hostname" {
+	type = list(string)
+}

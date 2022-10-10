@@ -13,8 +13,8 @@ resource "docker_network" "lamp_network" {
 }
 
 resource "docker_container" "apache" {
-	name = "webserver"
-	hostname = "apache"
+	name = var.container_name[0]
+	hostname = var.container_hostname[0]
 	image = docker_image.apache-image.latest
 	networks = [docker_network.lamp_network.id]
 	ports {
@@ -23,7 +23,7 @@ resource "docker_container" "apache" {
 		ip = var.ip
 	}
 	labels {
-		label = "project"
+		label = var.label
 		value = var.project_name
 	}
 	volumes {
@@ -50,8 +50,8 @@ resource "docker_volume" "mariadb_volume" {
 }
 
 resource "docker_container" "mariadb" {
-	name = "db"
-	hostname = "db"
+	name = var.container_name[1]
+	hostname = var.container_hostname[1]
 	image = docker_image.mariadb-image.latest
 	networks = [docker_network.lamp_network.id]
 	ports {
@@ -60,7 +60,7 @@ resource "docker_container" "mariadb" {
 		ip = var.ip
 	}
 	labels {
-		label = "project"
+		label = var.label
 		value = var.project_name
 	}
 	env = [

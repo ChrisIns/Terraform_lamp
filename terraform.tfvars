@@ -10,3 +10,6 @@ volume_name="mariadb_volume"
 mysql_pass="MYSQL_ROOT_PASSWORD=1234"
 mysql_database="MYSQL_DATABASE=simple-website"
 project_name="lamp"
+label="project"
+container_name=["webserver","db"]
+container_hostname=["apache","db"]
