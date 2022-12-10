@@ -398,4 +398,56 @@ We create a **modules** directory in the working directory. This mdoules files w
 ├── terraform.tfvars \
 ├── variables.tf \
 ```
+In each modules directory, we'll have the main.tf, the variables.tf to define our variables and the output.tf for making attribute available for resources in our root module, lets see an example:
+
+Here's the code for the mariadb_volume child module:
+
+```
+
+resource "docker_volume" "mariadb_volume" {
+        name = var.volume_name
+}
+
+```
+
+We define the associated variables.tf file:
+
+```
+
+variable "volume_name" {
+        type = string
+        default = "mariadb_volume"
+}
+
+```
+
+And we difine the output file:
+
+```
+
+output "volume" {
+        value = docker_volume.mariadb_volume.id
+}
+
+```
+
+Then to define the child module to use in our root module:
+
+```
+
+module "mariadb_volume" {
+        source = "./modules/mariadb_volume"
+}
+
+```
+
+And then to access a value from a child module output:
+
+```
+
+volume_name = module.mariadb_volume.volume
+
+```
+
+The syntax is module.<child_module_name>.<output_name>
 
