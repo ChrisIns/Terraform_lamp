@@ -364,7 +364,7 @@ ports {
 Let's try to put some hierarchy in our code with child modules
 We create a **modules** directory in the working directory. This mdoules files will contains our differents child modules, we can see the working directory hierarchy with a tree command:
 
-...
+```
 
 ─$ tree
 
@@ -397,5 +397,5 @@ We create a **modules** directory in the working directory. This mdoules files w
 ├── terraform.tfstate.backup \
 ├── terraform.tfvars \
 ├── variables.tf \
----
+```
 
