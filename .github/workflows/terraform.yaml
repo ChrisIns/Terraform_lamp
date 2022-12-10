@@ -28,16 +28,6 @@ jobs:
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
-  terraform_appy:
-    name: 'Apply'
-    needs: terraform  
-    runs-on: self-hosted
-    env:
-      working-directory: ../../
-    defaults:
-      run:
-        working-directory: ${{ env.working-directory }}
-    steps:
       - name: Terraform Plan
         id: plan
         if: github.event_name == 'pull_request'
@@ -65,13 +55,13 @@ jobs:
             </details>
 
             *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
-            
-            github.rest.issues.createCOmment({
+
+            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: output
-            })
+              })
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1
