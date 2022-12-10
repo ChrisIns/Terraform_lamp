@@ -1,12 +1,8 @@
-images=["apache:lamp","mariadb:lamp"]
-path=["~/lamp/images/apache","~/lamp/images/db"]
 container_path=["/var/www/html","/var/lib/mysql"]
-network_name="lamp_network"
 ports_internal=[80,3306]
 ports_external=[80,3306]
 ip="0.0.0.0"
 host_path="/home/kali/lamp/website_files"
-volume_name="mariadb_volume"
 mysql_pass="MYSQL_ROOT_PASSWORD=1234"
 mysql_database="MYSQL_DATABASE=simple-website"
 project_name="lamp"
