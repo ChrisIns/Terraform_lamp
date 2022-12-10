@@ -13,6 +13,10 @@ jobs:
     env:
       working-directory: ../../
     steps:
+      - name: Where am i
+        id: where
+        run: pwd
+        working-directory: ${{env.working-directory}}
       - name: Terraform Format
         id: fmt
         run: terraform fmt -check
