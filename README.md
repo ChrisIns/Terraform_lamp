@@ -359,3 +359,43 @@ ports {
         }
 ```
 
+# Adding child modules 
+
+Let's try to put some hierarchy in our code with child modules
+We create a **modules** directory in the working directory. This mdoules files will contains our differents child modules, we can see the working directory hierarchy with a tree command:
+
+...
+
+─$ tree
+
+
+├── main.tf \
+├── modules \
+│   ├── apache-image \
+│   │   ├── main.tf \
+│   │   ├── output.tf \
+│   │   ├── provider.tf \
+│   │   └── variables.tf \
+│   ├── lamp_network \
+│   │   ├── main.tf \
+│   │   ├── output.tf \
+│   │   ├── provider.tf \
+│   │   └── variables.tf \
+│   ├── mariadb-image \
+│   │   ├── main.tf \
+│   │   ├── output.tf \
+│   │   ├── provider.tf \
+│   │   └── variables.tf \
+│   └── mariadb_volume \
+│       ├── main.tf \
+│       ├── output.tf \
+│       ├── provider.tf \
+│       └── variables.tf \
+├── provider.tf \ 
+├── README.md \
+├── terraform.tfstate \
+├── terraform.tfstate.backup \
+├── terraform.tfvars \
+├── variables.tf \
+---
+
