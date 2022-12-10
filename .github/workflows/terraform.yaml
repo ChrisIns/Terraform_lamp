@@ -24,4 +24,4 @@ jobs:
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
-        working-directory: ${{working-directory}}
+        working-directory: ${{env.working-directory}}
