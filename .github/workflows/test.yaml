@@ -7,4 +7,4 @@ jobs:
     runs-on: kali
     steps:
       - name: Run a command
-        run: echo Hello, world!
+        run: echo Hello, world!!
