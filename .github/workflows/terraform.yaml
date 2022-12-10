@@ -12,9 +12,12 @@ jobs:
       - name: Terraform Format
         id: fmt
         run: terraform fmt -check
+        working-directory: ~/lamp  
       - name: Terraform Init
         id: init
         run: terraform init
+        working-directory: ~/lamp
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
+        working-directory: ~/lamp
