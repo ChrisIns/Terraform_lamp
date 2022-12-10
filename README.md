@@ -451,3 +451,41 @@ volume_name = module.mariadb_volume.volume
 
 The syntax is module.<child_module_name>.<output_name>
 
+# Adding CI CHECK with github action
+
+Let's add a CI to check if the code is valid after each push to the branch.
+We will check the validity of the code with a tf fmt and a tf validate
+We will then initialize terraform
+
+```
+
+name: Terraform
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: self-hosted
+    env:
+      working-directory: ../../
+    steps:
+      - name: Where am i
+        id: where
+        run: pwd
+        working-directory: ${{env.working-directory}}
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -check 
+        working-directory: ${{env.working-directory}}  
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        working-directory: ${{env.working-directory}}
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+        working-directory: ${{env.working-directory}}
+```
