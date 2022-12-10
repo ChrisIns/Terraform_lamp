@@ -28,16 +28,6 @@ jobs:
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
-  terraform_appy:
-    name: 'Apply'
-    needs: terraform  
-    runs-on: self-hosted
-    env:
-      working-directory: ../../
-    defaults:
-      run:
-        working-directory: ${{ env.working-directory }}
-    steps:
       - name: Terraform Plan
         id: plan
         if: github.event_name == 'pull_request'
