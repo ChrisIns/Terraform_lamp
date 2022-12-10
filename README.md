@@ -421,7 +421,7 @@ variable "volume_name" {
 
 ```
 
-And we difine the output file:
+And we define the output file:
 
 ```
 
