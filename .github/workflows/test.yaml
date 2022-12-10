@@ -4,7 +4,7 @@ on: push
 
 jobs:
   init:
-    runs-on: self-hosted
+    runs-on: kali
     steps:
       - name: Run a command
         run: echo Hello, world!
