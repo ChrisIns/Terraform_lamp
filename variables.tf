@@ -1,47 +1,47 @@
 
 variable "container_path" {
-	type = list(string)
+  type = list(string)
 }
 
 
 variable "ports_internal" {
-	type = list(number)
+  type = list(number)
 }
 
 variable "ports_external" {
-	type = list(number)
+  type = list(number)
 }
 
 variable "ip" {
-	type = string
-	description = "IP localhost"
+  type        = string
+  description = "IP localhost"
 }
 
 variable "host_path" {
-	type = string
+  type = string
 }
 
 
 variable "mysql_pass" {
-	type = string
+  type = string
 }
 
 variable "mysql_database" {
-	type = string
+  type = string
 }
 
 variable "project_name" {
-	type = string
+  type = string
 }
 
 variable "label" {
-	type = string
+  type = string
 }
 
 variable "container_name" {
-	type = list(string)
+  type = list(string)
 }
 
 variable "container_hostname" {
-	type = list(string)
+  type = list(string)
 }

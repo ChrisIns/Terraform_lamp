@@ -20,6 +20,8 @@ jobs:
       - name: Terraform Format
         id: fmt
         run: terraform fmt -check main.tf
+        run: terraform fmt -check variables.tf
+        run: terraform fmt -check provider.tf  
         working-directory: ${{env.working-directory}}  
       - name: Terraform Init
         id: init

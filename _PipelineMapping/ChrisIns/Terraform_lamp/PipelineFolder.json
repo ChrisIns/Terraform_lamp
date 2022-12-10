@@ -1,0 +1,12 @@
+﻿{
+  "repositoryName": "ChrisIns/Terraform_lamp",
+  "pipelineDirectory": "Terraform_lamp",
+  "workspaceDirectory": "Terraform_lamp/Terraform_lamp",
+  "repositories": {
+    "ChrisIns/Terraform_lamp": {
+      "repositoryPath": "Terraform_lamp/Terraform_lamp",
+      "lastRunOn": "12/10/2022 16:03:29 -05:00"
+    }
+  },
+  "lastRunOn": "12/10/2022 16:07:32 -05:00"
+}
