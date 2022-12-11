@@ -1,4 +1,4 @@
-# un commentaire
+# des commentaires
 
 module "apache-image" {
   source = "./modules/apache-image"

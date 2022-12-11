@@ -60,7 +60,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `${{env.output}}`
+              body: output`
               })
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
