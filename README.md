@@ -488,3 +488,66 @@ jobs:
         id: validate
         run: terraform validate -no-color
 ```
+# Adding CD to the project
+
+We will then add more code to our workflow to perform terraform plan and apply after a PR.
+Normally the code would have generated the PR automatically but it seems to have a problem somewhere, even though I followed the Terraform guide on that.
+
+Here's the part of the code for the CD:
+
+```
+- name: Terraform Plan
+        id: plan
+        if: github.event_name == 'pull_request'
+        run: terraform plan -no-color -input=false
+        continue-on-error: true
+      - name: Update Pull Request
+        uses: actions/github-script@v6
+        if: github.event_name == 'pull_request'
+        env:
+          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+            #### Terraform Initialization ⚙\`${{ steps.init.outcome }}\`
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+
+            <details><summary>Show Plan</summary>
+
+            \`\`\`\n
+            ${process.env.PLAN}
+            \`\`\`
+
+            </details>
+
+            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve -input=false
+```
+
+Even though we have to create the PR ourself, after validating the PR and merging to main branch, terraform apply the config on our host and run the containers:
+
+```
+└─$ docker ps                                                                                                                             
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                    NAMES
+27e15cca1055   89cdac8dc0ae   "docker-php-entrypoi…"   3 minutes ago   Up 3 minutes   0.0.0.0:80->80/tcp       webserver
+1e37d1053af4   89fb791d5ffe   "docker-entrypoint.s…"   3 minutes ago   Up 3 minutes   0.0.0.0:3306->3306/tcp   db
+
+```
+
+
+                                                                                                                       
+
