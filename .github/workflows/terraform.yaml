@@ -45,7 +45,7 @@ jobs:
           delete-branch: false
           title: 'Terraform update'
           body: |
-            Update test
+            Update test success
           draft: false
 
       - name: Terraform Plan Status
