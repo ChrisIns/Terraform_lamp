@@ -47,7 +47,7 @@ jobs:
           author: ${{ env.GIT_COMMIT_AUTHOR_NAME }} <${{ env.GIT_COMMIT_AUTHOR_EMAIL }}">
           base: main
           branch: "master"
-          delete-branch: true
+          delete-branch: false
           title: 'Terraform update'
           body:
             Update test success
