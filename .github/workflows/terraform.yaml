@@ -42,7 +42,7 @@ jobs:
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
           branch: main
-          delete-branch: false
+          delete-branch: true
           title: 'Terraform update'
           body: |
             Update test success
