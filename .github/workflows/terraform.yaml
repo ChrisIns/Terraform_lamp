@@ -38,21 +38,16 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{secrets.GITHUB_TOKEN }}
-          commit-message: Test PR
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          signoff: false
-          branch: main
+          base: main
+          branch: "master"
           delete-branch: true
           title: 'Terraform update'
-          body: |
+          body:
             Update test success
-          draft: false
-
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1
-
-
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
