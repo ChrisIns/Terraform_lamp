@@ -48,7 +48,7 @@ jobs:
           base: main
           branch: "master"
           delete-branch: false
-          title: 'Terraform update'
+          title: 'Terraform update success'
           body:
             Update test success
       - name: Terraform Plan Status
