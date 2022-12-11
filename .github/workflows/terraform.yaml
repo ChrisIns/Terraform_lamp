@@ -41,7 +41,7 @@ jobs:
           commit-message: Test PR
           author: ${{ github.actor }}
           signoff: false
-          branch: master
+          branch: main
           delete-branch: false
           title: 'Terraform update'
           body: |
