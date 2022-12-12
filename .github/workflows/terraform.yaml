@@ -45,7 +45,7 @@ jobs:
           author: ${{ env.GIT_COMMIT_AUTHOR_NAME }} <${{ env.GIT_COMMIT_AUTHOR_EMAIL }}">
           body: 
             Test generation PR
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           delete-branch: false
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
