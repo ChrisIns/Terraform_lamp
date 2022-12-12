@@ -1,8 +1,8 @@
 ---
-name: "@octokit/types"
-version: 7.1.0
+name: "@octokit/plugin-rest-endpoint-methods"
+version: 5.13.0
 type: npm
-summary: Shared TypeScript definitions for Octokit projects
+summary: 
 homepage: 
 license: mit
 licenses:
