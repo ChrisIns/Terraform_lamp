@@ -5,7 +5,7 @@ variable "image" {
 
 variable "path" {
 	type = string
-	default = "~/lamp/images/apache"
+	default = "~/Terraform_lamp/images/apache"
 }
 
 variable "project_name" {
