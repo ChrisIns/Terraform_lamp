@@ -38,7 +38,7 @@ jobs:
       - name: Raise PR
         uses: peter-evans/create-pull-request@v3
         with:
-          branch: master
+          branch: "master"
           base: main
           title: "Pull Request automatic TF"
           comitter: {{ env.GIT_COMMIT_AUTHOR_NAME }} <${{ env.GIT_COMMIT_AUTHOR_EMAIL }}>
