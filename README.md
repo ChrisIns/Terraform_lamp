@@ -593,7 +593,9 @@ cd9d29bb200a   prom/prometheus:v2.40.1            "/bin/prometheus --c…"   11 
 8366f645176a   gcr.io/cadvisor/cadvisor:v0.46.0   "/usr/bin/cadvisor -…"   About an hour ago   Up 7 minutes (healthy)   8080/tcp                                                                                                                                                                                                                             cadvisor
 ```
 
+And now we can go 127.0.0.1:3000 (grafana default webpage) and check our dashboard:
 
+![grafana dashboard](https://user-images.githubusercontent.com/45426865/207140062-91e3a20a-cc5a-4bfe-b590-38ef8c9d9a5c.png)
 
 
 
