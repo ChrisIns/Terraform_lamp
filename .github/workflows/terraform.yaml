@@ -71,11 +71,13 @@ jobs:
   supervision:
     name: Supervision
     runs-on: self-hosted
+    env:
+      working-directory: ../../dockprom  
     needs: terraform
+    defaults:
+      run:
+        working-directory: ${{ env.working-directory }}
     steps:
       - name: Lauch docker compose
         id: grafana
-        run: |
-          cd dockprom
-          docker-compose up -d
-          cd ..
+        run: docker-compose up -d
