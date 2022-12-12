@@ -74,5 +74,5 @@ jobs:
     needs: terraform
     steps:
       - name: Lauch docker compose
-        id: docker compose prometheus grafana
+        id: grafana
         run: docker-compose up -d
