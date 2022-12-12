@@ -2,7 +2,7 @@
 
 # Goal of this project
 
-This project will be about building a LAMP stack as microservices with Docker using Terraform
+This project is a POC about building a LAMP stack as microservices with Docker using Terraform and implementing a CICD pipeline on top of that.
 
 # Installing Terraform
 
