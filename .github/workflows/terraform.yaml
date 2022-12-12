@@ -71,8 +71,14 @@ jobs:
   supervision:
     name: Supervision
     runs-on: self-hosted
+    env:
+      working-directory: ../../dockprom  
     needs: terraform
+    defaults:
+      run:
+        working-directory: ${{ env.working-directory }}
     steps:
       - name: Lauch docker compose
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         id: grafana
-        run: docker-compose up -d -f dockprom/
+        run: docker-compose up -d
