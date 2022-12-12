@@ -75,4 +75,7 @@ jobs:
     steps:
       - name: Lauch docker compose
         id: grafana
-        run: docker-compose up -d -f dockprom/
+        run: |
+          cd dockprom
+          docker-compose up -d
+          cd ..
