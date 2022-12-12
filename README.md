@@ -547,6 +547,55 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS   
 1e37d1053af4   89fb791d5ffe   "docker-entrypoint.s…"   3 minutes ago   Up 3 minutes   0.0.0.0:3306->3306/tcp   db
 
 ```
+# Adding the monitoring
+
+To finish the pipeline, We will add in the CICD pipeline the deployment of our supervision to monitor our container with Prometheus and Grafana.
+For this, due to the the multiple component of prometheus + grafana, docker compose is the perfect choice to dpeloy all the component required by the supervion.
+Then we will add the docker-compose up -d command in github action workflow file to deploy the monitoring containers.
+
+For this we could create our own dockerfiles of each prometheus component, but we'll use the dockprom repo for that: https://github.com/stefanprodan/dockprom
+
+Then we add the following in our wokflow file:
+
+```
+
+supervision:
+    name: Supervision
+    runs-on: self-hosted
+    env:
+      working-directory: ../../dockprom
+    needs: terraform
+    defaults:
+      run:
+        working-directory: ${{ env.working-directory }}
+    steps:
+      - name: Lauch docker compose
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        id: grafana
+        run: docker-compose up -d
+```
+
+So, by doing the PR + merge, our CICD will run the command docker-compose to deploy all the containers required for supervision.
+
+Here's is the list of all containers deployed:
+
+```
+inux@linux-virtual-machine:~/Terraform_lamp$ docker ps
+CONTAINER ID   IMAGE                              COMMAND                  CREATED             STATUS                   PORTS                                                                                                                                                                                                                                NAMES
+448ceca343ed   794222d20bc6                       "docker-php-entrypoi…"   7 minutes ago       Up 7 minutes             0.0.0.0:80->80/tcp                                                                                                                                                                                                                   webserver
+00dbc3cdb5b3   13a64d6be661                       "docker-entrypoint.s…"   7 minutes ago       Up 7 minutes             0.0.0.0:3306->3306/tcp                                                                                                                                                                                                               db
+fef8d22d0bc1   grafana/grafana:9.2.4              "/run.sh"                11 minutes ago      Up 7 minutes             3000/tcp                                                                                                                                                                                                                             grafana
+cd9d29bb200a   prom/prometheus:v2.40.1            "/bin/prometheus --c…"   11 minutes ago      Up 7 minutes             9090/tcp                                                                                                                                                                                                                             prometheus
+06373dc89fcb   prom/alertmanager:v0.24.0          "/bin/alertmanager -…"   11 minutes ago      Up 7 minutes             9093/tcp                                                                                                                                                                                                                             alertmanager
+6c527c5acea9   caddy:2.6.2                        "caddy run --config …"   11 minutes ago      Up 7 minutes             80/tcp, 443/tcp, 0.0.0.0:3000->3000/tcp, :::3000->3000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9090-9091->9090-9091/tcp, :::9090-9091->9090-9091/tcp, 2019/tcp, 443/udp, 0.0.0.0:9093->9093/tcp, :::9093->9093/tcp   caddy
+2854d5b8c288   prom/node-exporter:v1.4.0          "/bin/node_exporter …"   About an hour ago   Up 7 minutes             9100/tcp                                                                                                                                                                                                                             nodeexporter
+570ae1bf95fe   prom/pushgateway:v1.4.3            "/bin/pushgateway"       About an hour ago   Up 7 minutes             9091/tcp                                                                                                                                                                                                                             pushgateway
+8366f645176a   gcr.io/cadvisor/cadvisor:v0.46.0   "/usr/bin/cadvisor -…"   About an hour ago   Up 7 minutes (healthy)   8080/tcp                                                                                                                                                                                                                             cadvisor
+```
+
+
+
+
 
 
                                                                                                                        
