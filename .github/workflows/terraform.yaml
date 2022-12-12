@@ -68,3 +68,10 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
+  Supervision:
+    runs-on: self-hosted
+    needs: terraform
+    steps:
+      - name: Lauch docker-compose
+        id: docker compose prometheus grafana
+        run: docker-compose up -d
