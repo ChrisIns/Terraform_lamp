@@ -79,5 +79,6 @@ jobs:
         working-directory: ${{ env.working-directory }}
     steps:
       - name: Lauch docker compose
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         id: grafana
         run: docker-compose up -d
