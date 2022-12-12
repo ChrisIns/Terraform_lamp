@@ -33,8 +33,6 @@ jobs:
         if: github.event_name == 'pull_request'
         run: terraform plan -no-color -input=false
         continue-on-error: true
-      - name: checking-out-code
-        uses: actions/checkout@v2
       - name: extract git commit data
         uses: rlespinasse/git-commit-data-action@v1.x
       - name: Raise PR
