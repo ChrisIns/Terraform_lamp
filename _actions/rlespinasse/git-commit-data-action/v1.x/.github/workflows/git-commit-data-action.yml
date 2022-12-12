@@ -1,0 +1,57 @@
+name: git-commit-data-action
+on:
+  pull_request:
+  push:
+    branches:
+      - v1.x
+jobs:
+  script-testing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          # Need to download all history in order
+          # to make the tests work properly
+          fetch-depth: 0
+      - uses: docker://ffurrer/bats:latest
+        with:
+          args: '--recursive .'
+
+  os-testing:
+    runs-on: ${{ matrix.os  }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+      - name: Output
+        run: |
+          echo "Get commit info"
+          echo " - ${{ env.GIT_COMMIT_SHA }}"
+          echo " - ${{ env.GIT_COMMIT_SHORT_SHA }}"
+          echo "Get author info"
+          echo " - ${{ env.GIT_COMMIT_AUTHOR }}"
+          echo " - ${{ env.GIT_COMMIT_AUTHOR_NAME }}"
+          echo " - ${{ env.GIT_COMMIT_AUTHOR_EMAIL }}"
+          echo "Get committer info"
+          echo " - ${{ env.GIT_COMMIT_COMMITTER }}"
+          echo " - ${{ env.GIT_COMMIT_COMMITTER_NAME }}"
+          echo " - ${{ env.GIT_COMMIT_COMMITTER_EMAIL }}"
+          echo "Get message info"
+          echo " - ${{ env.GIT_COMMIT_MESSAGE_SUBJECT }}"
+          echo " - ${{ env.GIT_COMMIT_MESSAGE_SUBJECT_SANITIZED }}"
+          echo " - ${{ env.GIT_COMMIT_MESSAGE_BODY }}"
+
+  git-commit-data-action-release:
+    runs-on: ubuntu-latest
+    needs:
+      - script-testing
+      - os-testing
+    steps:
+      - uses: actions/checkout@v3
+      - name: Release this GitHub Action
+        uses: rlespinasse/release-that@v1
